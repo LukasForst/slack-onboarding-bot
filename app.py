@@ -2,6 +2,7 @@ import os
 import logging
 from flask import Flask
 from slack import WebClient
+from slack.web.base_client import BaseClient
 from slackeventsapi import SlackEventAdapter
 import ssl as ssl_lib
 import certifi
@@ -17,6 +18,8 @@ slack_web_client = WebClient(token=os.environ['SLACK_BOT_TOKEN'])
 # For simplicity we'll store our app data in-memory with the following data structure.
 # onboarding_tutorials_sent = {"channel": {"user_id": OnboardingTutorial}}
 onboarding_tutorials_sent = {}
+
+BaseClient.BASE_URL = os.environ['BASE_URL']
 
 
 def start_onboarding(user_id: str, channel: str):
