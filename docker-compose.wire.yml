@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  bot:
+    env_file:
+      - .env.wire
+    networks:
+      - charon-onboarding-bot
+    depends_on:
+      - charon
+
+  charon:
+    image: lukaswire/charon:latest
+    container_name: charon-onboarding-bot
+    env_file:
+      - .env.wire
+    ports:
+      - 8080:8080
+    networks:
+      - charon-onboarding-bot
+
+
+networks:
+  charon-onboarding-bot:
+    driver: bridge

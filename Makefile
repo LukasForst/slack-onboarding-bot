@@ -1,11 +1,14 @@
 docker-build:
-	docker build -t lukaswire/onboarding-bot src
+	(cd src && docker build -t lukaswire/onboarding-bot .)
 
 docker-run:
-	docker run --rm -p 3000:3000 lukaswire/onboarding-bot
+	(cd src && docker run --rm -p 3000:3000 lukaswire/onboarding-bot)
 
 docker-deploy:
-	docker push lukaswire/onboarding-bot
+	(cd src && docker push lukaswire/onboarding-bot)
 
 run-slack:
-	BASE_URL=https://www.slack.com/api/ python3 app.py
+	docker-compose -f docker-compose.yml -f docker-compose.slack.yml up
+
+run-wire:
+	docker-compose -f docker-compose.yml -f docker-compose.wire.yml up
