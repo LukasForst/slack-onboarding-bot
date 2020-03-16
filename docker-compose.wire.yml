@@ -3,6 +3,7 @@ version: '3'
 services:
   bot:
     env_file:
+      - .env
       - .env.wire
     networks:
       - charon-onboarding-bot
@@ -10,9 +11,10 @@ services:
       - charon
 
   charon:
-    image: lukaswire/charon:latest
+    image: lukaswire/charon
     container_name: charon-onboarding-bot
     env_file:
+      - .env
       - .env.wire
     ports:
       - 8080:8080

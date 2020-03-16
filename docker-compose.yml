@@ -9,3 +9,5 @@ services:
     container_name: onboarding-bot
     ports:
       - 3000:3000
+    env_file:
+      - .env

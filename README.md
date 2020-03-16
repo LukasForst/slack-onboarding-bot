@@ -5,16 +5,29 @@ loaded from the environment.
 
 Diff between this `app.py` and the one from the [official repo](https://github.com/slackapi/python-slackclient)
 ```bash
-» diff -n python-slackclient/tutorial/PythOnBoardingBot/app.py slack-onboarding-bot/src/app.py                                                                                                                                                         1 ↵ lukas@Mefisto
-a4 1
-from slack.web.base_client import BaseClient
-a20 2
-BaseClient.BASE_URL = os.environ['BASE_URL']
-
+» diff -n python-slackclient/tutorial/PythOnBoardingBot/app.py slack-onboarding-bot/src/app.py
+15c15
+< slack_web_client = WebClient(base_url=os.environ['BACKEND'], token=os.environ['SLACK_BOT_TOKEN'])
+---
+> slack_web_client = WebClient(token=os.environ['SLACK_BOT_TOKEN'])
 ```
 
-Environment variables:
-- `SLACK_SIGNING_SECRET` - obtain from the Slack account if running in Slack 
-- `SLACK_BOT_TOKEN` - obtain from the Slack account if running in Slack
-- `BASE_URL` - URL of the backend, can be either [Charon](https://github.com/wireapp/charon)
-or Slack = `https://www.slack.com/api/`
+To run inside docker-compose environment, one must create `.env` file with following variables.
+```bash
+# secret for slack
+SLACK_SIGNING_SECRET= 
+# obtained either from slack, or from Roman
+SLACK_BOT_TOKEN= 
+# from slack
+BOT_TOKEN= 
+```
+
+Then just simply run:
+- to connect to Wire
+```bash
+make run-wire
+```
+- to connect to Slack
+```bash
+make run-slack
+```
