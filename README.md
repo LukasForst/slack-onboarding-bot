@@ -5,7 +5,7 @@ loaded from the environment.
 
 Diff between this `app.py` and the one from the [official repo](https://github.com/slackapi/python-slackclient)
 ```bash
-» diff -n python-slackclient/tutorial/PythOnBoardingBot/app.py PythOnBoardingBot/app.py                                                                                                                                                         1 ↵ lukas@Mefisto
+» diff -n python-slackclient/tutorial/PythOnBoardingBot/app.py slack-onboarding-bot/src/app.py                                                                                                                                                         1 ↵ lukas@Mefisto
 a4 1
 from slack.web.base_client import BaseClient
 a20 2

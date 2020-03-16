@@ -1,5 +1,5 @@
 docker-build:
-	docker build -t lukaswire/onboarding-bot .
+	docker build -t lukaswire/onboarding-bot src
 
 docker-run:
 	docker run --rm -p 3000:3000 lukaswire/onboarding-bot
