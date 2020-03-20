@@ -4,3 +4,4 @@ services:
   bot:
     env_file:
       - .env.slack
+      - .env.slack.secret

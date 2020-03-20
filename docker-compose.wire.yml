@@ -3,7 +3,6 @@ version: '3'
 services:
   bot:
     env_file:
-      - .env
       - .env.wire
     networks:
       - charon-onboarding-bot
@@ -14,14 +13,28 @@ services:
     image: lukaswire/charon
     container_name: charon-onboarding-bot
     env_file:
-      - .env
       - .env.wire
     ports:
       - 8080:8080
     networks:
       - charon-onboarding-bot
+      - charon-redis
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:5.0.8-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - ./config/redis.conf:/redis.conf
+    command: [ "redis-server", "/redis.conf" ]
+    networks:
+      - charon-redis
 
 
 networks:
   charon-onboarding-bot:
+    driver: bridge
+  charon-redis:
     driver: bridge
