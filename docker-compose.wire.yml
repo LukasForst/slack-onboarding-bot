@@ -3,6 +3,7 @@ version: '3'
 services:
   bot:
     env_file:
+      - .env.slack.secret
       - .env.wire
     networks:
       - charon-onboarding-bot
@@ -11,14 +12,14 @@ services:
 
   charon:
     image: lukaswire/charon
-    container_name: charon-onboarding-bot
+    container_name: onboarding-bot-charon
     env_file:
       - .env.wire
     ports:
       - 8080:8080
     networks:
       - charon-onboarding-bot
-      - charon-redis
+      - charon-proxy-redis
     depends_on:
       - redis
 
@@ -30,11 +31,11 @@ services:
       - ./config/redis.conf:/redis.conf
     command: [ "redis-server", "/redis.conf" ]
     networks:
-      - charon-redis
+      - charon-proxy-redis
 
 
 networks:
   charon-onboarding-bot:
     driver: bridge
-  charon-redis:
+  charon-proxy-redis:
     driver: bridge

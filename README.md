@@ -12,22 +12,26 @@ Diff between this `app.py` and the one from the [official repo](https://github.c
 > slack_web_client = WebClient(token=os.environ['SLACK_BOT_TOKEN'])
 ```
 
-To run inside docker-compose environment, one must create `.env` file with following variables.
-```bash
-# secret for slack
-SLACK_SIGNING_SECRET= 
-# obtained either from slack, or from Roman
-SLACK_BOT_TOKEN= 
-# from slack
-BOT_TOKEN= 
-```
+## Targeting Slack Api
 
-Then just simply run:
-- to connect to Wire
+To run inside docker-compose environment targeting Slack backend, 
+one must create `.env.slack.secret` file with following variables.
 ```bash
-make run-wire
+SLACK_SIGNING_SECRET=
+SLACK_BOT_TOKEN=
 ```
-- to connect to Slack
+How to obtain these values from Slack is specified in the [official guide](https://github.com/slackapi/python-slackclient/blob/master/tutorial/04-running-the-app.md).
+
+To start the bot simply run.
 ```bash
 make run-slack
 ```
+
+## Targeting Wire API
+Preparation:
+* Register your bot in Roman
+* Start the bot and Charon
+```bash
+make run-wire
+```
+* Register bot in Charon - use endpoint registration using Swagger UI
