@@ -1,12 +1,14 @@
+#!/usr/bin/env python3
+
 import argparse
 import json
-from dataclasses import dataclass, fields, field
-from typing import Tuple
 
+from dataclasses import dataclass, field
+from typing import Tuple
 from dacite import from_dict
 
-from roman import obtain_auth
 from charon import register_bot
+from roman import obtain_auth
 from secrets import generate_signing_secret, generate_bot_token
 
 
@@ -31,7 +33,7 @@ class Config:
     password: str
     service_name: str
     service_url: str
-    env_path: str
+    bot_summary: str = field(default='Testing Bot for Charon.')
     roman_url: str = field(default="http://proxy.services.zinfra.io")
     charon_url: str = field(default="http://localhost:8080")
     bot_url: str = field(default="http://bot:8080/slack/events")
@@ -46,30 +48,26 @@ def load_config(path: str) -> Config:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Prepare environment for the docker-compose')
 
-    parser.add_argument("--email", "-e", help="Email for the Roman account.")
-    parser.add_argument("--password", "-p", help="Password for the Roman account.")
-
-    parser.add_argument("--name", "-n", help="Name of the service, if the account does not exist yet.")
-    parser.add_argument("--service-url", "-su", help="URL where is the service running.")
-
-    parser.add_argument("--env-path", "-e", help="File to which should be the secrets printed.")
-
-    parser.add_argument("--roman-url", "-u", default="http://proxy.services.zinfra.io", help="Roman URL")
-    parser.add_argument("--charon-url", "-u", default="http://localhost:8080", help="Charon URL")
-    parser.add_argument("--bot-url", "-u", default="http://bot:8080/slack/events", help="Bot URL")
-
+    parser.add_argument("--config", "-c", help="Path to configuration file.")
+    parser.add_argument("--env", "-e", help="Path to .env file for secrets writing")
     args = parser.parse_args()
 
-    auth = obtain_auth(args.roman_url, args.email, args.password, args.name, args.service_url, "Testing bot.")
+    config = load_config(args.config)
+
+    auth = obtain_auth(config.roman_url, config.email, config.password, config.service_name, config.service_url,
+                       config.bot_summary)
 
     if not auth:
         print('It was not possible to get auth token.')
         exit(1)
 
-    bot_api_key, signing_secret = create_env(args.env_path)
-    r = register_bot(args.charon_url, bot_token=simple_bot_token(), signing_secret=signing_secret,
+    bot_api_key, signing_secret = create_env(args.env)
+    r = register_bot(config.charon_url,
+                     bot_token=simple_bot_token(),
+                     signing_secret=signing_secret,
                      bot_api_key=bot_api_key,
-                     bot_url=args.bot_url, auth_code=auth)
+                     bot_url=config.bot_url,
+                     auth_code=auth)
     if r:
         print('Bot successfully registered.')
     else:

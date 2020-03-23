@@ -17,3 +17,5 @@ def register_bot(charon_url: str, bot_token: str, signing_secret: str, bot_api_k
         print('Bot registered')
     else:
         print(f'It was not possible to register the bot: {r.json()}')
+
+    return bool(r)
