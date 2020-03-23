@@ -3,8 +3,8 @@ version: '3'
 services:
   bot:
     env_file:
-      - .env.slack.secret
       - .env.wire
+      - .env.wire.secret
     networks:
       - charon-onboarding-bot
     depends_on:
@@ -28,7 +28,7 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - ./config/redis.conf:/redis.conf
+      - ./db_config/redis.conf:/redis.conf
     command: [ "redis-server", "/redis.conf" ]
     networks:
       - charon-proxy-redis

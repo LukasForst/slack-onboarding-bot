@@ -36,7 +36,7 @@ class Config:
     bot_summary: str = field(default='Testing Bot for Charon.')
     roman_url: str = field(default="http://proxy.services.zinfra.io")
     charon_url: str = field(default="http://localhost:8080")
-    bot_url: str = field(default="http://bot:8080/slack/events")
+    bot_url: str = field(default="http://bot:3000/slack/events")
 
 
 def load_config(path: str) -> Config:
