@@ -2,9 +2,9 @@
 
 import argparse
 import os
-import requests
-
 from typing import Optional
+
+import requests
 
 s = requests.Session()
 
@@ -45,7 +45,7 @@ def create_service(url: str, name: str, service_url: str, service_summary: str) 
     payload = {
         'name': name,
         'url': service_url,
-        'summary': service_summary
+        'summary': service_summary if service_summary else 'Summary not provided by user.'
     }
     r = s.post(f"{url}/service", json=payload)
     if r:
