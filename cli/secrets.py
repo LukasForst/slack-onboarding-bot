@@ -20,6 +20,9 @@ def generate_bot_token() -> str:
     return '-'.join(final)
 
 
+def get_env_string() -> str:
+    return f'SLACK_SIGNING_SECRET={generate_signing_secret()}\nSLACK_BOT_TOKEN={generate_bot_token()}'
+
+
 if __name__ == '__main__':
-    print(f'SLACK_SIGNING_SECRET={generate_signing_secret()}')
-    print(f'SLACK_BOT_TOKEN={generate_bot_token()}')
+    print(get_env_string())
