@@ -1,4 +1,4 @@
-# Slack on boarding bot
+# Slack onboarding bot
 Slightly modified official onboarding bot from the official [Slack tutorial](https://github.com/slackapi/python-slackclient/tree/master/tutorial).
 The only modification was, that the `BASE_URL` aka URL of the Slack backend is now being 
 loaded from the environment.
